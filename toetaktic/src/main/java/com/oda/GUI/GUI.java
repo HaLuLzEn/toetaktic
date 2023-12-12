@@ -12,6 +12,7 @@ public class GUI<d> {
     private JFrame frame;
     private int width = 1280;
     private int height = 720;
+    private int player = 0;
     public static byte[][] board = new byte[5][5];
     private static List<ClickFieldEvent> listeners = new ArrayList<>();
     public static void setBoard(byte[][] newBoard){
@@ -61,8 +62,21 @@ public class GUI<d> {
         panel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                double w = 720.0/board.length;
+                if(x > 720 || y > 720) return;
+                x = (int) (x / w);
+                y = (int) (y / w);
+                if(board[x][y] != 0) return;
+                board[x][y] = (byte) (player + 1);
+                System.out.println(x + "/" + y);
                 for(ClickFieldEvent ce : listeners){
-                    ce.onClickEvent(0,0,0);
+                    ce.onClickEvent(x,y,player);
+                }
+                player++;
+                if(player == 2){
+                    player = 0;
                 }
             }
 

@@ -8,7 +8,7 @@ public class WinCheck {
         GUI.addListener(new ClickFieldEvent() {
             @Override
             public void onClickEvent(int x, int y, int userID) {
-
+                System.out.println(x + "/" + y + "/" + userID);
             }
         });
     }
