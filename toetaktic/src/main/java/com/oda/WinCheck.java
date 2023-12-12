@@ -24,4 +24,14 @@ public class WinCheck {
             }
         });
     }
+
+    public static int winCheck(byte[][] board){
+        int l = board.length;
+        for(int x = 2; x < l; x++){
+            for(int y = 2; y < l; y++){
+                
+            }
+        }
+        return 0;
+    }
 }

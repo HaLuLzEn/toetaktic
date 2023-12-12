@@ -1,5 +1,7 @@
 package com.oda.GUI;
 
+import com.oda.WinCheck;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
