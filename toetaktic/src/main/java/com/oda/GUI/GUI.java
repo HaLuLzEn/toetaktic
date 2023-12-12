@@ -2,13 +2,27 @@ package com.oda.GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUI<d> {
     private JFrame frame;
     private int width = 1280;
     private int height = 720;
     public static byte[][] board = new byte[5][5];
+    private static List<ClickFieldEvent> listeners = new ArrayList<>();
+    public static void setBoard(byte[][] newBoard){
+        board = newBoard;
+    }
+    public static void addListener(ClickFieldEvent e){
+        listeners.add(e);
+    }
+    public static byte[][] getBoard(){
+        return board;
+    }
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -43,6 +57,35 @@ public class GUI<d> {
         panel.add(label);
 
         frame.show();
+
+        panel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for(ClickFieldEvent ce : listeners){
+                    ce.onClickEvent(0,0,0);
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         Thread t = new Thread(() -> {
             try {
