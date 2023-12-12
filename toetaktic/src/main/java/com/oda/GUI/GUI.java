@@ -8,7 +8,7 @@ public class GUI<d> {
     private JFrame frame;
     private int width = 1280;
     private int height = 720;
-    public static byte[][] board = new byte[3][3];
+    public static byte[][] board = new byte[5][5];
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -31,7 +31,7 @@ public class GUI<d> {
         frame = new JFrame();
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(0, 0, width, height);
+        frame.setBounds(0, 0, width, height + 39);
         frame.setTitle("ToeTakTic");
 
         JPanel panel = new JPanel();
@@ -42,53 +42,61 @@ public class GUI<d> {
         label.setBounds(0, 0, width, height);
         panel.add(label);
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    frame.setTitle("GUI");
+        frame.show();
 
-                    BufferedImage image = new BufferedImage(width,height, 1);
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
-                    Graphics2D g = image.createGraphics();
+            while (true) {
+                frame.setTitle("GUI");
 
-                    g.setColor(Color.WHITE);
+                BufferedImage image = new BufferedImage(width,height,1);
 
-                    int w = 720/board.length;
+                Graphics2D g = image.createGraphics();
 
-                    for(int row = 1; row < board.length; row++){
-                        g.drawLine(0,w*row,720,w*row);
-                    }
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                    for(int column = 1; column < board.length; column++){
-                        g.drawLine(w*column,0,w*column,720);
-                    }
+                g.setColor(Color.WHITE);
 
-                    g.setColor(Color.BLUE);
+                double w = 720.0/board.length;
 
-                    int offset = 10;
+                for(int row = 1; row < board.length; row++){
+                    g.drawLine(0, (int) (w*row),720, (int) (w*row));
+                }
 
-                    for(int x = 0; x < board.length; x++){
-                        for(int y = 0; y < board.length; y++){
-                            switch (board[x][y]){
-                                case 0:{
-                                    g.drawLine(x*w,y*w ,x*w+w,y*w+w);
-                                    break;
-                                }
-                                case 1:{
-                                    break;
-                                }
-                                case 2:{
-                                    break;
-                                }
+                for(int column = 1; column < board.length; column++){
+                    g.drawLine((int) (w*column),0, (int) (w*column),720);
+                }
+
+                g.setColor(Color.BLUE);
+
+                int offset = (int) (w / 10);
+
+                for(int x = 0; x < board.length; x++){
+                    for(int y = 0; y < board.length; y++){
+                        switch (board[x][y]){
+                            case 0:{
+                                break;
+                            }
+                            case 1:{
+                                g.drawLine((int) ((x*w) + offset), (int) ((y*w) + offset), (int) ((x*w+w) - offset), (int) ((y*w+w) - offset));
+                                g.drawLine((int) ((x*w) + offset), (int) ((y*w+w) - offset), (int) ((x*w+w) - offset), (int) ((y*w) + offset));
+                                break;
+                            }
+                            case 2:{
+                                g.drawOval((int) ((x*w) + offset), (int) ((y*w) + offset), (int) w - 2 * offset, (int) w - 2 * offset);
+                                break;
                             }
                         }
                     }
-                    label.setIcon(new ImageIcon(image));
                 }
+                label.setIcon(new ImageIcon(image));
             }
         });
         t.start();
-
     }
 }
