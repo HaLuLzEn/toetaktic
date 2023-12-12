@@ -28,6 +28,7 @@ public class GUI<d> {
     }
 
     public static void main(String[] args) {
+        WinCheck.test();
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -72,7 +73,6 @@ public class GUI<d> {
                 y = (int) (y / w);
                 if(board[x][y] != 0) return;
                 board[x][y] = (byte) (player + 1);
-                System.out.println(x + "/" + y);
                 for(ClickFieldEvent ce : listeners){
                     ce.onClickEvent(x,y,player);
                 }
