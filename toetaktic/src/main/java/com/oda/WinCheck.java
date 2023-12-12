@@ -23,7 +23,7 @@ public class WinCheck {
         GUI.addListener(new ClickFieldEvent() {
             @Override
             public void onClickEvent(int x, int y, int userID) {
-                winCheck(GUI.getBoard());
+                winCheckNew(GUI.getBoard());
             }
         });
     }
@@ -61,18 +61,44 @@ public class WinCheck {
                 for(String template : templates){
                     int x0 = 0;
                     int y0 = 0;
-                    int id0 = board[x][y];
+                    int id0 = -1;
+                    boolean exitEarly = false;
+                    System.out.println("");
+                    System.out.println(template);
+                    System.out.println("---------------------");
                     for(char c : template.toCharArray()){
                         if(c == '#'){
+                            if(id0 == -1) id0 = board[x+x0][y+y0];
+                            if(id0 <= 0) {
+                                exitEarly = true;
+                                break;
+                            }
+                            System.out.print(x + "/" + y + " (" + x0 + "/" + y0 + ") ");
+                            if(board[x+x0][y+y0] != id0) {
+                                exitEarly = true;
+                                System.out.println("Incorrect");
+                                break;
+                            } else {
+                                System.out.println("Correct");
+                            }
                             x0++;
                         } else if(c == '/'){
+                            System.out.println("Linebreak");
                             x0 = 0;
                             y0++;
+                        } else {
+                            x0++;
                         }
+                    }
+                    if(!exitEarly) {
+                        System.out.println(x + "/" + y);
+                        System.out.println(id0 + " won!");
+                        return 0;
                     }
                 }
             }
         }
+        System.out.println("Nothing found");
         return 0;
     }
 }
