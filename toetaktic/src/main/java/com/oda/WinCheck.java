@@ -10,8 +10,23 @@ public class WinCheck {
 
     public static void winConditionCheck(int x, int y, int userID){
         byte[][] board = GUI.getBoard();
+
         if (board[x+1][y+1] < gridSize){
-            if(board[x][y] == board[x+1][y+1] && board[x][y] == board[x+2][y+2]){
+            if(board[x][y] == board[x+1][y] && board[x][y] == board[x+2][y]){
+                won[userID] = true;
+            } else if (board[x][y] == board[x-1][y] && board[x][y] == board[x-2][y]){
+                won[userID] = true;
+            } else if (board[x][y] == board[x][y+1] && board[x][y] == board[x][y+2]) {
+                won[userID] = true;
+            } else if (board[x][y] == board[x][y-1] && board[x][y] == board[x][y-2]) {
+                won[userID] = true;
+            } else if (board[x][y] == board[x+1][y+1] && board[x][y] == board[x+2][y+2]) {
+                won[userID] = true;
+            } else if (board[x][y] == board[x-1][y-1] && board[x][y] == board[x-2][y-2]) {
+                won[userID] = true;
+            } else if (board[x][y] == board[x-1][y+1] && board[x][y] == board[x-2][y+2]) {
+                won[userID] = true;
+            } else if (board[x][y] == board[x+1][y-1] && board[x][y] == board[x+2][y-2]) {
                 won[userID] = true;
             }
         }
