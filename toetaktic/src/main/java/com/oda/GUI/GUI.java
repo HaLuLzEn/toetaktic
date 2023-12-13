@@ -28,7 +28,7 @@ public class GUI<d> {
     }
 
     public static void main(String[] args) {
-        WinCheck.test();
+        WinCheck.init();
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
