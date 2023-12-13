@@ -62,9 +62,10 @@ public class GUI<d> {
 
         frame.show();
 
-        panel.addMouseListener(new MouseListener() {
+        frame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println("Click");
                 int x = e.getX();
                 int y = e.getY();
                 double w = 720.0/board.length;
